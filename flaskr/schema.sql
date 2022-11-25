@@ -17,11 +17,12 @@ CREATE TABLE post (
 );
 
 CREATE TABLE IF NOT EXISTS engrenage (
-name TEXT NOT NULL,
-advantages TEXT NOT NULL,
-drowback TEXT NOT NULL,
-img TEXT NOT NULL,
-auteur TEXT NOT NULL,
-descreption TEXT NOT NULL,
-PRIMARY KEY (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  id INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  advantages TEXT NOT NULL,
+  drowback TEXT NOT NULL,
+  img TEXT NOT NULL,
+  auteur TEXT NOT NULL,
+  descreption TEXT NOT NULL,
+  PRIMARY KEY (id)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
