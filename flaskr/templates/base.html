@@ -2,7 +2,7 @@
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-  <h1>Flaskr</h1>
+  <h1>Musée des engrenages</h1>
   <ul>
     {% if g.user %}
       <li><span>{{ g.user['username'] }}</span>
@@ -22,3 +22,17 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
+
+<div class="contain imgAutor">
+  <div class="imgAutor">
+    <img src="../static/helicoidale.jpg" alt="Avatar" style="width:90px">
+    <p class="column"><span>Name autor.</span>  </p>
+  </div>
+  <p>Description</p>
+</div>
+
+<div class="contain">
+  <img src="image.jpg" alt="Avatar" style="width:90px">
+  <p><span >Rebecca Flex.</span> CEO at Company.</p>
+  <p>No one is better than John Doe.</p>
+</div> 

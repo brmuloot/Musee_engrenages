@@ -12,7 +12,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, body, advantage, drowback, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -25,6 +25,8 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        advantage = request.form['advantage']
+        drowback = request.form['drowback']
         error = None
 
         if not title:
@@ -35,9 +37,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO post (title, body, advantage, drowback, author_id)'
+                ' VALUES (?, ?, ?, ?, ?)',
+                (title, body, advantage, drowback, g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.index'))
@@ -47,7 +49,7 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, body, advantage, drowback, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -70,6 +72,8 @@ def update(id):
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        advantage = request.form['advantage']
+        drowback = request.form['drowback']
         error = None
 
         if not title:
@@ -80,9 +84,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
+                'UPDATE post SET title = ?, body = ?, advantage = ?, drowback = ?'
                 ' WHERE id = ?',
-                (title, body, id)
+                (title, body, advantage, drowback, id)
             )
             db.commit()
             return redirect(url_for('blog.index'))

@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
 
+
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
@@ -14,17 +15,7 @@ CREATE TABLE post (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   advantage TEXT NOT NULL,
-  drowback NOT NULL,
+  drowback TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
-CREATE TABLE IF NOT EXISTS engrenage (
-  id INTEGER NOT NULL,
-  name TEXT NOT NULL,
-  advantages TEXT NOT NULL,
-  drowback TEXT NOT NULL,
-  img TEXT NOT NULL,
-  auteur TEXT NOT NULL,
-  descreption TEXT NOT NULL,
-  PRIMARY KEY (id)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
