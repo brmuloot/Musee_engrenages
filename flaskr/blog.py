@@ -1,5 +1,6 @@
+import os
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, send_from_directory
 )
 from werkzeug.exceptions import abort
 
@@ -102,3 +103,10 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
+
+import subprocess as sp
+
+@bp.route('/upload.php')
+def phpexample():
+    out = sp.run(["php", "upload.php"], stdout=sp.PIPE)
+    return out.stdout
