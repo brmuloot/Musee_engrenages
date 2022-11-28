@@ -20,8 +20,8 @@
         {% endif %}
       </header>
       <p class="body">{{ post['body'] }}</p>
-      <p class="body">{{ post['advantage']}}</p>
-      <p class="body">{{ post['drowback']}}</p>
+      <p class="underline">Avantage : <p>{{ post['advantage']}}</p></p>
+      <p class="underline">Inconvenient : <p>{{ post['drowback']}}</p></p>
       </div>
     </article>
     {% if not loop.last %}
