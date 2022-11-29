@@ -19,6 +19,7 @@
     <input type="file" name="file">
 
     <input type="submit" value="Save">
+    <input type="button" value="Retour" onclick="history.back()" style="width:130px">
   </form>
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
