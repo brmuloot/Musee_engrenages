@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     <label for="title">Title</label>
     <input name="title" id="title" value="{{ request.form['title'] }}" required>
     <label for="body">Description</label>
@@ -17,7 +17,8 @@
     <label for="drowback">Inconvenient</label>
     <textarea name="drowback" id="drowback">{{request.form['drowback']}}</textarea>
     
-    <p><a href="{{ url_for('upload.upload') }}">Upload</a></p>
+    <label for="file">Choisir une image</label>
+    <input type="file" name="file">
 
     <input type="submit" value="Save">
   </form>

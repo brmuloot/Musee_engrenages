@@ -22,7 +22,11 @@
       <p class="body">{{ post['body'] }}</p>
       <p class="underline">Avantage : <p>{{ post['advantage']}}</p></p>
       <p class="underline">Inconvenient : <p>{{ post['drowback']}}</p></p>
-      </div>
+      <p class="body">adza d{{ post['img']  }}</p>
+      {% if post['img'] %}
+      <img src="{{ url_for('static', filename = 'files/' + post['img']) }}" style="width: 150px;">
+      {% endif %}
+    </div>
     </article>
     {% if not loop.last %}
       <hr>

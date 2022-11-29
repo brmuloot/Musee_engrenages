@@ -15,6 +15,9 @@
     <textarea name="advantage" id="advantage">{{ request.form['advantage'] or post['advantage'] }}</textarea>
     <label for="drowback">Inconvenient</label>
     <textarea name="drowback" id="drowback">{{ request.form['drowback'] or post['drowback'] }}</textarea>
+    <label for="file">Changer d'image</label>
+    <input type="file" name="file">
+
     <input type="submit" value="Save">
   </form>
   <hr>

@@ -6,28 +6,44 @@ from werkzeug.exceptions import abort
 
 from flaskr.auth import login_required
 from flaskr.db import get_db
+from flask import Blueprint, render_template
+from werkzeug.utils import secure_filename
+import os
 
 bp = Blueprint('blog', __name__)
+
+IMG_PATH = os.getcwd() + r'/flaskr/static/files'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @bp.route('/')
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, advantage, drowback, created, author_id, username'
+        'SELECT p.id, title, body, advantage, drowback, img, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
 
-
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
     if request.method == 'POST':
+        file = request.files['file']
+        if file.filename == '':
+            flash('No image selected for uploading')
+        if file and allowed_file(file.filename):
+            file.save(os.path.join(IMG_PATH, secure_filename(file.filename)))
+
         title = request.form['title']
         body = request.form['body']
         advantage = request.form['advantage']
         drowback = request.form['drowback']
+        img = secure_filename(file.filename)
         error = None
 
         if not title:
@@ -38,9 +54,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, advantage, drowback, author_id)'
-                ' VALUES (?, ?, ?, ?, ?)',
-                (title, body, advantage, drowback, g.user['id'])
+                'INSERT INTO post (title, body, advantage, drowback, img, author_id)'
+                ' VALUES (?, ?, ?, ?, ?, ?)',
+                (title, body, advantage, drowback, img, g.user['id'])
             )
             db.commit()
             return redirect(url_for('blog.index'))
@@ -50,7 +66,7 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, advantage, drowback, created, author_id, username'
+        'SELECT p.id, title, body, advantage, drowback, img, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -71,10 +87,17 @@ def update(id):
     post = get_post(id)
 
     if request.method == 'POST':
+        file = request.files['file']
+        if file.filename == '':
+            flash('No image selected for uploading')
+        
+        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),'static/files',secure_filename(file.filename)))
+
         title = request.form['title']
         body = request.form['body']
         advantage = request.form['advantage']
         drowback = request.form['drowback']
+        img = secure_filename(file.filename)
         error = None
 
         if not title:
@@ -85,9 +108,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?, advantage = ?, drowback = ?'
+                'UPDATE post SET title = ?, body = ?, advantage = ?, drowback = ?, img = ?'
                 ' WHERE id = ?',
-                (title, body, advantage, drowback, id)
+                (title, body, advantage, drowback, img, id)
             )
             db.commit()
             return redirect(url_for('blog.index'))

@@ -18,4 +18,4 @@ def upload():
         file=form.file.data
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),'static/files',secure_filename(file.filename)))
         return "FIle has been uploaded."
-    return render_template('blog/upload.html', form=form)
+    return render_template('blog/create.html', form=form)
