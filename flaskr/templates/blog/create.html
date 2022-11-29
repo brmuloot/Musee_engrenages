@@ -17,16 +17,8 @@
     <label for="drowback">Inconvenient</label>
     <textarea name="drowback" id="drowback">{{request.form['drowback']}}</textarea>
     
+    <p><a href="{{ url_for('upload.upload') }}">Upload</a></p>
+
     <input type="submit" value="Save">
-
   </form>
-
-  <form action="upload.php" method="post" enctype="multipart/form-data">
-    <h2>Upload Fichier</h2>
-    <label for="fileUpload">Fichier:</label>
-    <input type="file" name="photo" id="fileUpload">
-    <input type="submit" name="submit" value="Upload">
-    <p><strong>Note:</strong> Seuls les formats .jpg, .jpeg, .jpeg, .gif, .png sont autorisés jusqu'à une taille maximale de 5 Mo.</p>
-</form>
-
 {% endblock %}
